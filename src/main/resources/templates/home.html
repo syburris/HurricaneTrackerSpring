@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<
+<form action="/create-hurricane" method="post">
+    <input type="text" placeholder="Hurricane Name" name="hName"/>
+    <input type="text" placeholder="Hurricane Location" name="hLocation"/>
+    <select name="hCat">
+        <option selected disabled>Category</option>
+        <option value="ONE">1</option>
+        <option value="TWO">2</option>
+        <option value="THREE">3</option>
+        <option value="FOUR">4</option>
+        <option value="FIVE">5</option>
+    </select>
+    <input type="text" placeholder="Image URL" name="hImage" width="200"/>
+    <button type="submit">Submit Hurricane</button>
+</form><br><br>
+
+<form action="/edit-hurricane" method="post">
+    <input type="text" placeholder="Hurricane to Edit" name="hurricaneToEdit"/>
+    <input type="text" placeholder="New Name" name="newName"/>
+    <input type="text" placeholder="New Location" name="newLocation"/>
+    <select name="newCat">
+        <option selected disabled>Category</option>
+        <option value="ONE">1</option>
+        <option value="TWO">2</option>
+        <option value="THREE">3</option>
+        <option value="FOUR">4</option>
+        <option value="FIVE">5</option>
+    </select>
+    <input type="text" placeholder="New Image URL" name="newImage" width="200"/>
+    <button type="submit">Update Hurricane</button>
+</form><br><br>
+
+<form action="/delete-hurricane" method="post">
+    <input type="text" placeholder="# of Hurricane to delete" name="hurricaneToDelete"/>
+    <button type="submit">Delete Hurricane</button>
+</form>
+
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Category</th>
+        <th>Submitter</th>
+        <th>Image</th>
+    </tr>
+    {{#hurricanes}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{location}}</td>
+        <td>{{category}}</td>
+        <td></td>
+        <td><img src="http://{{image}}"/></td>
+    </tr>
+    {{/hurricanes}}
+</table>
+
+</body>
+</html>
