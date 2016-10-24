@@ -108,7 +108,7 @@ public class HurricaneTrackerController {
     }
 
     @RequestMapping(path = "/edit-hurricane", method = RequestMethod.GET)
-    public String editPage(Model model, HttpSession session, Integer id) throws Exception{
+    public String editPage(Model model, HttpSession session, int id) throws Exception{
         String name = (String) session.getAttribute("username");
         User user = users.findFirstByName(name);
         Hurricane h = hurricanes.findOne(id);
@@ -130,8 +130,6 @@ public class HurricaneTrackerController {
         else if(!user.name.equals(h.user.name)) {
             throw new Exception("Not yours to edit.");
         }
-        hurricanes.save(h);
-
         return "redirect:/";
     }
 
