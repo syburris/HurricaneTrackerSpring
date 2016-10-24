@@ -26,8 +26,9 @@ public class HurricaneTrackerController {
     @PostConstruct
     public void init() {
         User defaultUser = new User("Steven","Young");
-        if (users.findFirstByName(defaultUser.name) == null);
+        if (users.findFirstByName(defaultUser.name) == null) {
         users.save(defaultUser);
+        }
     }
 
 
@@ -106,9 +107,31 @@ public class HurricaneTrackerController {
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/edit-hurricane", method = RequestMethod.POST)
-    public String edit(HttpSession session, int id) throws Exception{
+    @RequestMapping(path = "/edit-hurricane", method = RequestMethod.GET)
+    public String editPage(Model model, HttpSession session, Integer id) throws Exception{
         String name = (String) session.getAttribute("username");
+        User user = users.findFirstByName(name);
+        Hurricane h = hurricanes.findOne(id);
+        if (user == null) {
+            throw new Exception("Not logged in!");
+        }
+        model.addAttribute("user", user);
+        return "edit-hurricane";
+    }
+
+    @RequestMapping(path = "/edit-hurricane", method = RequestMethod.POST)
+    public String edit(HttpSession session, Integer id) throws Exception{
+        String name = (String) session.getAttribute("username");
+        User user = users.findFirstByName(name);
+        Hurricane h = hurricanes.findOne(id);
+        if(user==null) {
+            throw new Exception("Not logged in!");
+        }
+        else if(!user.name.equals(h.user.name)) {
+            throw new Exception("Not yours to edit.");
+        }
+        hurricanes.save(h);
+
         return "redirect:/";
     }
 
