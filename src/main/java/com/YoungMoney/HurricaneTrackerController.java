@@ -116,11 +116,12 @@ public class HurricaneTrackerController {
             throw new Exception("Not logged in!");
         }
         model.addAttribute("user", user);
+        model.addAttribute("hurricane", h);
         return "edit-hurricane";
     }
 
     @RequestMapping(path = "/edit-hurricane", method = RequestMethod.POST)
-    public String edit(HttpSession session, Integer id) throws Exception{
+    public String edit(HttpSession session, String hName, String hLocation, Hurricane.Category hCat, String hImage, Integer id) throws Exception{
         String name = (String) session.getAttribute("username");
         User user = users.findFirstByName(name);
         Hurricane h = hurricanes.findOne(id);
@@ -130,6 +131,9 @@ public class HurricaneTrackerController {
         else if(!user.name.equals(h.user.name)) {
             throw new Exception("Not yours to edit.");
         }
+        hurricanes.delete(h);
+        Hurricane edit = new Hurricane(hName,hLocation,hCat,hImage,user);
+        hurricanes.save(edit);
         return "redirect:/";
     }
 
