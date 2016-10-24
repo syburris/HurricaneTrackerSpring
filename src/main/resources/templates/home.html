@@ -6,7 +6,21 @@
 </head>
 <body>
 
-<
+<!--search by category of hurricane-->
+<a href="/">All</a>
+<a href="/?category=ONE">Cat 1</a>
+<a href="/?category=TWO">Cat 2</a>
+<a href="/?category=THREE">Cat 3</a>
+<a href="/?category=FOUR">Cat 4</a>
+<a href="/?category=FIVE">Cat 5</a>
+
+<!--search by name or location of category-->
+<form action="/" method="get">
+    <input type="text" placeholder="Search by Name or Location" name="search"/>
+    <button type="submit">Search</button>
+</form>
+
+
 <form action="/create-hurricane" method="post">
     <input type="text" placeholder="Hurricane Name" name="hName"/>
     <input type="text" placeholder="Hurricane Location" name="hLocation"/>
