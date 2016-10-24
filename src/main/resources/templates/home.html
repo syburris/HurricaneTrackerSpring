@@ -5,7 +5,18 @@
     <title>Home</title>
 </head>
 <body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Username" name="username"/>
+    <input type="password" placeholder="Password" name="password"/>
+    <button type="submit">Submit</button>
+</form>
+{{/user}}
+{{#user}}
 
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
 <!--search by category of hurricane-->
 <a href="/">All</a>
 <a href="/?category=ONE">Cat 1</a>
@@ -66,6 +77,8 @@
         <th>Category</th>
         <th>Submitter</th>
         <th>Image</th>
+        <th></th>
+        <th></th>
     </tr>
     {{#hurricanes}}
     <tr>
@@ -73,11 +86,24 @@
         <td>{{name}}</td>
         <td>{{location}}</td>
         <td>{{category}}</td>
-        <td></td>
+        <td>{{#user}}{{name}}{{/user}}</td>
         <td><img src="http://{{image}}"/></td>
+        <td>
+            {{#isMe}}
+            <form action="/delete-hurricane" method="post">
+                <input type="hidden" value="{{id}}" name="id"/>
+                <button type="submit">Delete</button>
+            </form>
+            {{/isMe}}
+        </td>
+        <td>
+            {{#isMe}}
+            <a href="/edit-hurricane?id={{id}}">Edit</a>
+            {{/isMe}}
+        </td>
     </tr>
     {{/hurricanes}}
 </table>
-
+{{/user}}
 </body>
 </html>
