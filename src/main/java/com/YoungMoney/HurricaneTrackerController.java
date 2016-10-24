@@ -131,9 +131,11 @@ public class HurricaneTrackerController {
         else if(!user.name.equals(h.user.name)) {
             throw new Exception("Not yours to edit.");
         }
-        hurricanes.delete(h);
-        Hurricane edit = new Hurricane(hName,hLocation,hCat,hImage,user);
-        hurricanes.save(edit);
+        h.setCategory(hCat);
+        h.setImage(hImage);
+        h.setLocation(hLocation);
+        h.setName(hName);
+        hurricanes.save(h);
         return "redirect:/";
     }
 

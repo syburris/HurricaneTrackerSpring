@@ -7,6 +7,7 @@
 <body>
 
 <form action="/edit-hurricane" method="post">
+    <input type="hidden" value="{{hurricane.id}}" name="id"/>
     <input type="text" placeholder="New Name" name="hName"/>
     <input type="text" placeholder="New Location" name="hLocation"/>
     <select name="hCat">
