@@ -94,16 +94,10 @@ public class HurricaneTrackerController {
 
     @RequestMapping(path = "/delete-hurricane", method = RequestMethod.POST)
     public String delete(HttpSession session, int id) throws Exception {
-        String name = (String) session.getAttribute("username");
-        User user = users.findFirstByName(name);
-        Hurricane h = hurricanes.findOne(id);
-        if(user == null) {
-            throw new Exception("Not logged in!");
+        if (!validateUser(session,id)) {
+            throw new Exception("Uh uh uh!");
         }
-        else if (!user.name.equals(h.user.name)) {
-            throw new Exception("Not yours to delete.");
-        }
-        hurricanes.delete(h);
+        hurricanes.delete(id);
         return "redirect:/";
     }
 
@@ -122,21 +116,24 @@ public class HurricaneTrackerController {
 
     @RequestMapping(path = "/edit-hurricane", method = RequestMethod.POST)
     public String edit(HttpSession session, String hName, String hLocation, Hurricane.Category hCat, String hImage, Integer id) throws Exception{
-        String name = (String) session.getAttribute("username");
-        User user = users.findFirstByName(name);
+        if (!validateUser(session,id)) {
+            throw new Exception("Uh uh uh!");
+        }
         Hurricane h = hurricanes.findOne(id);
-        if(user==null) {
-            throw new Exception("Not logged in!");
-        }
-        else if(!user.name.equals(h.user.name)) {
-            throw new Exception("Not yours to edit.");
-        }
         h.setCategory(hCat);
         h.setImage(hImage);
         h.setLocation(hLocation);
         h.setName(hName);
         hurricanes.save(h);
         return "redirect:/";
+    }
+
+
+    public boolean validateUser(HttpSession session, int id) {
+        String name = (String) session.getAttribute("username");
+        User user = users.findFirstByName(name);
+        Hurricane h = hurricanes.findOne(id);
+        return user != null && h !=null && user.name.equals(h.user.name);
     }
 
 }

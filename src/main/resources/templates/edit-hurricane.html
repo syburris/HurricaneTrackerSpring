@@ -5,12 +5,12 @@
     <title>Edit Hurricane</title>
 </head>
 <body>
-
+{{#hurricane}}
 <form action="/edit-hurricane" method="post">
-    <input type="hidden" value="{{hurricane.id}}" name="id"/>
-    <input type="text" placeholder="New Name" name="hName"/>
-    <input type="text" placeholder="New Location" name="hLocation"/>
-    <select name="hCat">
+    <input type="hidden" value="{{id}}" name="id"/>
+    Name : <input type="text" value="{{name}}" name="hName"/>
+    <input type="text" value="{{location}}" name="hLocation"/>
+    <select name="hCat" id="category">
         <option selected disabled>Category</option>
         <option value="ONE">1</option>
         <option value="TWO">2</option>
@@ -18,9 +18,18 @@
         <option value="FOUR">4</option>
         <option value="FIVE">5</option>
     </select>
-    <input type="text" placeholder="New Image URL" name="hImage" width="200"/>
+    <input type="text" value="{{image}}" name="hImage" width="200"/>
     <button type="submit">Update Hurricane</button>
 </form>
+<script>
+var category = document.querySelector("#category");
+for (var i in category.options) {
+   var option  = category.options.item(i);
+   option.selected = option.value == "{{category}}";
+}
+
+</script>
+{{/hurricane}}
 
 </body>
 </html>
