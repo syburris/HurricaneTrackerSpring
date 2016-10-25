@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class HurricaneTrackerController {
             hList = hurricanes.findByNameContainingIgnoreCaseOrLocationContainingIgnoreCase(search,search);
         }
         else {
-            hList = (List<Hurricane>) hurricanes.findAll();
+            hList = hurricanes.findByOrderByDateDesc();
         }
 
         for (Hurricane h : hList) {
@@ -55,17 +56,18 @@ public class HurricaneTrackerController {
 
         model.addAttribute("hurricanes", hList);
         model.addAttribute("user",user);
+        model.addAttribute("now", LocalDate.now());
         return "home";
     }
 
     @RequestMapping(path = "/create-hurricane", method = RequestMethod.POST)
-    public String addHurricane(String hName, String hLocation, Hurricane.Category hCat, String hImage, HttpSession session) throws Exception {
+    public String addHurricane(String hName, String hLocation, Hurricane.Category hCat,String date, String hImage, HttpSession session) throws Exception {
         String name = (String) session.getAttribute("username");
         User user = users.findFirstByName(name);
         if (user == null) {
             throw new Exception("Not logged in.");
         }
-        Hurricane h = new Hurricane(hName, hLocation, hCat, hImage, user);
+        Hurricane h = new Hurricane(hName, hLocation, hCat, hImage, LocalDate.parse(date), user);
         hurricanes.save(h);
         return "redirect:/";
     }

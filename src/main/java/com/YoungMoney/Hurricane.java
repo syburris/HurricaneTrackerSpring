@@ -1,6 +1,7 @@
 package com.YoungMoney;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 /**
  * Created by stevenburris on 10/21/16.
@@ -28,6 +29,9 @@ public class Hurricane {
     @Column(nullable = false)
     String image;
 
+    @Column(nullable = false)
+    LocalDate date;
+
     @ManyToOne
     User user;
 
@@ -37,13 +41,22 @@ public class Hurricane {
     public Hurricane() {
     }
 
-    public Hurricane(String name, String location, Category category, String image, User user) {
+    public Hurricane(String name, String location, Category category, String image, LocalDate date, User user) {
         this.name = name;
         this.location = location;
         this.category = category;
         this.image = image;
         this.user = user;
+        this.date = date;
 
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public int getId() {

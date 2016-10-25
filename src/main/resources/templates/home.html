@@ -44,6 +44,7 @@
         <option value="FIVE">5</option>
     </select>
     <input type="text" placeholder="Image URL" name="hImage" width="200"/>
+    <input type="date" name="date" value="{{now}}"/>
     <button type="submit">Submit Hurricane</button>
 </form><br><br>
 <table>
@@ -53,6 +54,7 @@
         <th>Location</th>
         <th>Category</th>
         <th>Submitter</th>
+        <th>Date</th>
         <th>Image</th>
         <th></th>
         <th></th>
@@ -64,6 +66,7 @@
         <td>{{location}}</td>
         <td>{{category}}</td>
         <td>{{#user}}{{name}}{{/user}}</td>
+        <td>{{date}}</td>
         <td><img src="http://{{image}}"/></td>
         <td>
             {{#isMe}}

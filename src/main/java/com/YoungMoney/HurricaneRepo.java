@@ -12,6 +12,7 @@ public interface HurricaneRepo extends CrudRepository<Hurricane, Integer> {
     List<Hurricane> findByLocation(String location);
     List<Hurricane> findByName(String name);
     List<Hurricane> findByNameContainingIgnoreCaseOrLocationContainingIgnoreCase(String name, String location);
+    List<Hurricane> findByOrderByDateDesc();
 
     Hurricane findFirstByLocation(String location);
     int countByCategory(Hurricane.Category category);
