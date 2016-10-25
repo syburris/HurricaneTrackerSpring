@@ -24,8 +24,8 @@ public class HurricaneTrackerController {
 
 //    how to run methods as the controller is constructed shown below
     @PostConstruct
-    public void init() {
-        User defaultUser = new User("Steven","Young");
+    public void init() throws PasswordStorage.CannotPerformOperationException {
+        User defaultUser = new User("Steven", PasswordStorage.createHash("Young"));
         if (users.findFirstByName(defaultUser.name) == null) {
         users.save(defaultUser);
         }
@@ -75,10 +75,10 @@ public class HurricaneTrackerController {
     public String login(String username, String password, HttpSession session) throws Exception {
     User user = users.findFirstByName(username);
     if (user == null) {
-        user = new User(username,password);
+        user = new User(username,PasswordStorage.createHash(password));
         users.save(user);
     }
-    else if(!password.equals(user.password)) {
+    else if(!PasswordStorage.verifyPassword(password, user.password)) {
         throw new Exception("Wrong password!");
     }
     session.setAttribute("username",username);
