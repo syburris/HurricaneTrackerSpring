@@ -1,4 +1,4 @@
-package com.YoungMoney;
+package com.YoungMoney.utilities;
 
 import java.security.SecureRandom;
 import javax.crypto.spec.PBEKeySpec;

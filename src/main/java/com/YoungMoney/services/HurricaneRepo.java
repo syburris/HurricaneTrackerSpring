@@ -1,5 +1,6 @@
-package com.YoungMoney;
+package com.YoungMoney.services;
 
+import com.YoungMoney.entities.Hurricane;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

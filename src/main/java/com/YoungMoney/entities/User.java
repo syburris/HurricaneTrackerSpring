@@ -1,4 +1,4 @@
-package com.YoungMoney;
+package com.YoungMoney.entities;
 
 import org.springframework.stereotype.Controller;
 
@@ -13,13 +13,13 @@ public class User {
 
     @Id
     @GeneratedValue
-    int id;
+    public int id;
 
     @Column(nullable = false, unique = true)
-    String name;
+    public String name;
 
     @Column(nullable = false)
-    String password;
+    public String password;
 
     public User() {
     }
