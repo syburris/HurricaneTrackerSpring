@@ -59,6 +59,7 @@
         <th>Image</th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
     {{#hurricanes}}
     <tr>
@@ -84,6 +85,15 @@
                 <button type="submit">Edit</button>
             </form>
             {{/isMe}}
+        </td>
+        <td>
+
+            <form action="/like-hurricane" method="post">
+                <input type="hidden" value="{{id}}" name="id">
+                <button type="submit">{{^isLiked}}Like{{/isLiked}}
+                {{#isLiked}}UnLike{{/isLiked}}</button>
+            </form>
+
         </td>
     </tr>
     {{/hurricanes}}
