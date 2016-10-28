@@ -2,8 +2,7 @@ package com.YoungMoney;
 
 import com.YoungMoney.entities.Hurricane;
 import com.YoungMoney.services.HurricaneRepo;
-import com.YoungMoney.services.UserRestRepo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.YoungMoney.services.UserRepo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -11,11 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -28,7 +25,7 @@ import java.time.LocalDate;
 public class HurricaneTrackerSpringApplicationTests {
 
 	@Autowired
-	UserRestRepo users;
+    UserRepo users;
 
 	@Autowired
 	HurricaneRepo hurricanes;

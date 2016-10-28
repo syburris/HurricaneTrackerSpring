@@ -1,10 +1,12 @@
 package com.YoungMoney.controllers;
 
+import com.YoungMoney.entities.Like;
+import com.YoungMoney.services.LikeRepository;
 import com.YoungMoney.utilities.PasswordStorage;
 import com.YoungMoney.entities.Hurricane;
 import com.YoungMoney.entities.User;
 import com.YoungMoney.services.HurricaneRepo;
-import com.YoungMoney.services.UserRestRepo;
+import com.YoungMoney.services.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,10 @@ public class HurricaneTrackerController {
     HurricaneRepo hurricanes;
 
     @Autowired
-    UserRestRepo users;
+    UserRepo users;
+
+    @Autowired
+    LikeRepository likes;
 
 
 //    how to run methods as the controller is constructed shown below
@@ -51,12 +56,14 @@ public class HurricaneTrackerController {
         else if(search != null) {
             hList = hurricanes.findByNameContainingIgnoreCaseOrLocationContainingIgnoreCase(search,search);
         }
+
         else {
             hList = hurricanes.findByOrderByDateDesc();
         }
 
         for (Hurricane h : hList) {
             h.isMe = h.user.name.equals(name);
+            h.isLiked = likes.findFirstByUserAndHurricane(user,h) != null;
         }
 
         model.addAttribute("hurricanes", hList);
@@ -141,6 +148,22 @@ public class HurricaneTrackerController {
         User user = users.findFirstByName(name);
         Hurricane h = hurricanes.findOne(id);
         return user != null && h !=null && user.name.equals(h.user.name);
+    }
+
+    @RequestMapping(path = "/like-hurricane", method = RequestMethod.POST)
+    public String addLie(int id, HttpSession session) throws Exception {
+        String name = (String) session.getAttribute("username");
+        User user = users.findFirstByName(name);
+        Hurricane h = hurricanes.findOne(id);
+        Like like = likes.findFirstByUserAndHurricane(user,h);
+        if ( like != null) {
+            likes.delete(like);
+        }
+        else  {
+            like = new Like(user,h);
+            likes.save(like);
+        }
+        return "redirect:/";
     }
 
 }
