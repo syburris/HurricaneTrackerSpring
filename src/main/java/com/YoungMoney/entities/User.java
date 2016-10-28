@@ -1,8 +1,10 @@
 package com.YoungMoney.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by stevenburris on 10/24/16.
@@ -18,8 +20,13 @@ public class User {
     @Column(nullable = false, unique = true)
     public String name;
 
+    @JsonIgnore
     @Column(nullable = false)
     public String password;
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user")
+//    List<Hurricane> hurricanes;
 
     public User() {
     }
@@ -58,4 +65,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }
