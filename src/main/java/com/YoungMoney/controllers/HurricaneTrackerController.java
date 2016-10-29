@@ -151,7 +151,7 @@ public class HurricaneTrackerController {
     }
 
     @RequestMapping(path = "/like-hurricane", method = RequestMethod.POST)
-    public String addLie(int id, HttpSession session) throws Exception {
+    public String addLike(int id, HttpSession session) throws Exception {
         String name = (String) session.getAttribute("username");
         User user = users.findFirstByName(name);
         Hurricane h = hurricanes.findOne(id);
